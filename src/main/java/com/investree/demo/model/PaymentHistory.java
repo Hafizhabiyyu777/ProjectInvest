@@ -10,7 +10,8 @@ import java.util.List;
 import java.util.UUID;
 
 @Data
-@Table(name = "payment_history")
+@Entity
+//@Table(name = "payment_history")
 public class PaymentHistory implements Serializable {
 
     @Id
@@ -28,7 +29,8 @@ public class PaymentHistory implements Serializable {
     private String bukti_pembayaran;
 
     @JsonIgnore
-    @OneToMany(mappedBy = "PaymentHistory", fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @OneToMany
+    @JoinColumn(name = "id_transaksi")
     private List<Transaksi> transaksi;
 
 }

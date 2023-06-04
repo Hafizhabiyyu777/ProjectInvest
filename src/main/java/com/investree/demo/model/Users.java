@@ -11,7 +11,8 @@ import java.util.UUID;
 
 
 @Data
-@Table(name="users")
+@Entity
+//@Table(name="users")
 public class Users implements Serializable {
 
     @Id
@@ -28,11 +29,5 @@ public class Users implements Serializable {
     @Column(name = "is_active")
     private Boolean is_active;
 
-    @OneToOne(mappedBy = "users")
-    private UserDetail userDetail;
-
-    @JsonIgnore
-    @OneToMany(mappedBy = "users", fetch = FetchType.LAZY,cascade = CascadeType.ALL)
-    private List<Transaksi> transaksi;
 
 }

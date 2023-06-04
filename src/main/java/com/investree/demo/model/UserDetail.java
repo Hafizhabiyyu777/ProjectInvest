@@ -9,7 +9,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-@Table (name ="UserDetail")
+@Entity
+//@Table (name ="UserDetail")
 public class UserDetail implements Serializable {
 
     @Id

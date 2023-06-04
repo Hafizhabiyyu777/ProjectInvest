@@ -9,7 +9,8 @@ import java.io.Serializable;
 import java.util.UUID;
 
 @Data
-@Table(name = "Transaksi")
+@Entity
+//@Table(name = "Transaksi")
 public class Transaksi implements Serializable {
 
     @Id
@@ -17,11 +18,13 @@ public class Transaksi implements Serializable {
     @NotNull
     private UUID id;
 
-    @ManyToOne(targetEntity = Users.class, cascade = CascadeType.ALL)
-    private Users users;
+    @ManyToOne()
+    @JoinColumn(name = "id_peminjam")
+    private Users peminjam;
 
-    @ManyToOne(targetEntity = PaymentHistory.class, cascade = CascadeType.ALL)
-    private PaymentHistory paymenthistory;
+    @ManyToOne()
+    @JoinColumn(name = "id_meminjam")
+    private Users meminjam;
 
     @Column(name = "tenor")
     private Integer tenor;

@@ -7,7 +7,8 @@ import java.util.UUID;
 
 public interface TransaksiService {
 
-    public Map save(Transaksi transaksi);
-    public Map updateStatus(Transaksi transaksi);
+    public Map getAll();
+    public Map save(Transaksi transaksi, UUID idmeminjam, UUID idpeminjam);
+    public Map updateStatus(Transaksi transaksi, UUID id);
 
 }
