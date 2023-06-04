@@ -18,7 +18,7 @@ import java.util.Map;
 import java.util.UUID;
 
 @RestController
-@RequestMapping("/v1/barang")
+@RequestMapping("/v1/Transaksi")
 public class TransaksiController {
     @Autowired
     public TransaksiRepository trsrepo;
@@ -43,8 +43,10 @@ public class TransaksiController {
 
     @PutMapping("/save/{id}")
     public ResponseEntity<Map> updatestatus(@PathVariable(value = "id") UUID id, @RequestBody Transaksi trsmodel ) {
-        Map map = servis.updateStatus(trsmodel,id);
-        return new ResponseEntity<Map>(map,HttpStatus.OK);
+        System.out.println("Masuk ke PUT");
+        Map map = new HashMap();
+        Map obj = servis.updateStatus(trsmodel,id);
+        return new ResponseEntity<Map>(obj,HttpStatus.OK);
     }
 
     @GetMapping("/listPage")

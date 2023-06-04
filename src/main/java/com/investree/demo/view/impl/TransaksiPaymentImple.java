@@ -50,16 +50,22 @@ public class TransaksiPaymentImple implements TransaksiService {
 
     @Override
     public Map updateStatus(Transaksi transaksi, UUID id) {
+        System.out.println("Masuk ke service");
         Map map = new HashMap();
 
         try {
-            Transaksi trs = transrepo.getById(id);
+            Transaksi trs = transrepo.getByID(id);
+            System.out.println("Status sebelum : "+trs.getStatus());
             if(trs == null) {
                 map.put("statusCode", "404");
                 map.put("statusMessage","Data "+id+" Tidak ditemukan");
                 return map;
             }
             trs.setStatus(transaksi.getStatus());
+            trs.setTenor(transaksi.getTenor());
+            trs.setBunga_persen(transaksi.getBunga_persen());
+            trs.setTotal_pinjaman(transaksi.getTotal_pinjaman());
+            System.out.println("Transaksi status : "+transaksi.getStatus());
             transrepo.save(trs);
 
             map.put("data", trs);
