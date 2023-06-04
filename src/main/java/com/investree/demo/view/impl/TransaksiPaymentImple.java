@@ -6,6 +6,9 @@ import com.investree.demo.repository.TransaksiRepository;
 import com.investree.demo.repository.UsersRepository;
 import com.investree.demo.view.TransaksiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
@@ -88,5 +91,34 @@ public class TransaksiPaymentImple implements TransaksiService {
             return map;
 
         }
+    }
+
+    @Override
+    public Map findbyStatus(Boolean status, Integer page, Integer Size) {
+
+        Map map = new HashMap();
+
+        try {
+
+            Pageable show_data = PageRequest.of(page, Size);
+
+            Page<Transaksi> list = transrepo.findByStatus(status, show_data);
+
+            map.put("data", list);
+            map.put("statuscode", 200);
+            map.put("statusMessage", "Get Sukses");
+            return map;
+
+        }catch (Exception e) {
+
+            e.printStackTrace();
+            map.put("statusCode", "500");
+            map.put("StatusCode", 200);
+            map.put("statusMessage", e);
+            return map;
+
+        }
+
+
     }
 }

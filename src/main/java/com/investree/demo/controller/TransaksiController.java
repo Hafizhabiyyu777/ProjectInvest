@@ -5,6 +5,10 @@ import com.investree.demo.repository.TransaksiRepository;
 import com.investree.demo.repository.UsersRepository;
 import com.investree.demo.view.TransaksiService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
+import org.springframework.http.HttpHeaders;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -45,5 +49,18 @@ public class TransaksiController {
         Map c = servis.getAll();
         return new ResponseEntity<Map>(c, HttpStatus.OK);
     }
+
+    @GetMapping("/listByNama")
+    public ResponseEntity<Page<Transaksi>> listByNama(
+            @RequestParam() Integer page,
+            @RequestParam() Integer size,
+            @RequestParam() Boolean status) {
+
+        Pageable show_data = PageRequest.of(page,size);
+        Page<Transaksi> list = trsrepo.findByStatus(status, show_data);
+        return new ResponseEntity<Page<Transaksi>>(list,new HttpHeaders(), HttpStatus.OK);
+        
+    }
+    )
 
 }

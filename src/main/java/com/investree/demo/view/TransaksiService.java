@@ -10,5 +10,5 @@ public interface TransaksiService {
     public Map getAll();
     public Map save(Transaksi transaksi, UUID idmeminjam, UUID idpeminjam);
     public Map updateStatus(Transaksi transaksi, UUID id);
-
+    public Map findbyStatus(Boolean status,Integer page, Integer Size);
 }
