@@ -30,10 +30,14 @@ public class TransaksiController {
     TransaksiService servis;
 
 
-    @PostMapping("/save/{idmeminjam}/{idpeminjam}")
-    public ResponseEntity<Map> save(@PathVariable(value = "idmeminjam")UUID idmeminjam, @PathVariable(value = "idpeminjam")UUID idpeminjam, @RequestBody Transaksi trsmodel) {
+    @PostMapping("/save")
+    public ResponseEntity<Map> save( @RequestBody Transaksi trsmodel) {
+        System.out.println("Testing Masuk di awal");
+        UUID idmeminjam =UUID.fromString("66fd9596-bfb3-4869-a81e-0cf1e384259d");
+        UUID idPeminjam =UUID.fromString("0a817546-6ebf-40fc-ba2e-9f979f02a853");
+        System.out.println("Berhasil Mmasuk controller");
         Map map = new HashMap();
-        Map obj = servis.save(trsmodel,idmeminjam,idmeminjam);
+        Map obj = servis.save(trsmodel,idmeminjam,idPeminjam);
         return new ResponseEntity<Map>(obj,HttpStatus.OK);
     }
 
@@ -59,8 +63,8 @@ public class TransaksiController {
         Pageable show_data = PageRequest.of(page,size);
         Page<Transaksi> list = trsrepo.findByStatus(status, show_data);
         return new ResponseEntity<Page<Transaksi>>(list,new HttpHeaders(), HttpStatus.OK);
-        
+
     }
-    )
+
 
 }

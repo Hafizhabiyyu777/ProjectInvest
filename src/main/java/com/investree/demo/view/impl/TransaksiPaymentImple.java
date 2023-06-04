@@ -26,11 +26,13 @@ public class TransaksiPaymentImple implements TransaksiService {
     public Map save(Transaksi transaksi, UUID idmeminjam, UUID idpeminjam) {
         Map map = new HashMap();
         try {
-            Users userMeminjam = userrepo.getbyID(idmeminjam);
-            transaksi.setMeminjam(userMeminjam);
-
-            Users userPeminjam = userrepo.getbyID(idpeminjam);
-            transaksi.setPeminjam(userPeminjam);
+//            Users userMeminjam = userrepo.getbyID(idmeminjam);
+//            System.out.println("ID Meminjam : "+userMeminjam.getId());
+//            transaksi.setMeminjam(userMeminjam);
+//
+//            Users userPeminjam = userrepo.getbyID(idpeminjam);
+//            System.out.println("ID Peminjam : "+userMeminjam.getId());
+//            transaksi.setPeminjam(userPeminjam);
 
             Transaksi obj = transrepo.save(transaksi);
 

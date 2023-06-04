@@ -19,11 +19,11 @@ public class Transaksi implements Serializable {
     private UUID id;
 
     @ManyToOne()
-    @JoinColumn(name = "id_peminjam")
+    @JoinColumn(nullable = true,name = "id_peminjam")
     private Users peminjam;
 
     @ManyToOne()
-    @JoinColumn(name = "id_meminjam")
+    @JoinColumn(nullable = true,name = "id_meminjam")
     private Users meminjam;
 
     @Column(name = "tenor")
