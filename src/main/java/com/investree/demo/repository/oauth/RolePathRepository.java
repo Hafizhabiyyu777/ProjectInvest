@@ -6,9 +6,8 @@ import org.springframework.data.repository.PagingAndSortingRepository;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface RolePathRepository extends PagingAndSortingRepository<RolePath, UUID> {
+public interface RolePathRepository extends PagingAndSortingRepository<RolePath, Long> {
     RolePath findOneByName(String rolePathName);
 
     @Query(value = "SELECT p.* FROM oauth_role_path p " +
@@ -16,5 +15,5 @@ public interface RolePathRepository extends PagingAndSortingRepository<RolePath,
             "JOIN oauth_user_role ur ON ur.role_id = r.id " +
             "WHERE ur.user_id = ?1", nativeQuery = true)
     <T extends UserDetails> List<RolePath> findByUser(T user);
-
 }
+

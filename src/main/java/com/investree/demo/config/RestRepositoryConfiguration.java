@@ -11,3 +11,4 @@ public class RestRepositoryConfiguration implements RepositoryRestConfigurer {
     private WebApplicationContext context;
 
 }
+

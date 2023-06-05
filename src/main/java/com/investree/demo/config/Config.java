@@ -22,3 +22,4 @@ public class Config {
     public String code_null = "1";
     public String message_sukses = "sukses";
 }
+

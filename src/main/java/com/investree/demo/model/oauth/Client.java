@@ -1,24 +1,23 @@
 package com.investree.demo.model.oauth;
 
-//import org.springframework.security.oauth2.provider.ClientDetails;
-import jdk.javadoc.internal.doclets.formats.html.markup.HtmlAttr;
-import lombok.Data;
-import org.springframework.security.*;
+
+import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.oauth2.provider.ClientDetails;
+import org.springframework.util.StringUtils;
 
-import javax.management.relation.Role;
 import javax.persistence.*;
-import java.util.HashSet;
-import java.util.Set;
-import java.util.UUID;
+import java.io.Serializable;
+import java.util.*;
 
-@Data
 @Entity
 @Table(name = "oauth_client")
-public class Client  {
+public class Client implements ClientDetails, Serializable {
+
     @Id
-    @GeneratedValue()
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
+    private Long id;
 
     private String clientId;
 
@@ -50,5 +49,143 @@ public class Client  {
     )
     private Set<GrantedAuthority> authorities = new HashSet<>();
 
+    public Long getId() {
+        return id;
+    }
 
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    @Override
+    public String getClientId() {
+        return clientId;
+    }
+
+    public void setClientId(String clientId) {
+        this.clientId = clientId;
+    }
+
+    @Override
+    public Set<String> getResourceIds() {
+        Set<String> resources = new HashSet<>();
+        resources.add("oauth2-resource");
+
+        return resources;
+    }
+
+    @Override
+    public boolean isSecretRequired() {
+        return !StringUtils.isEmpty(clientSecret);
+    }
+
+    public void setClientSecret(String clientSecret) {
+        this.clientSecret = clientSecret;
+    }
+
+    @Override
+    public String getClientSecret() {
+        return clientSecret;
+    }
+
+    public String getScopes() {
+        return scopes;
+    }
+
+    public void setScopes(String scopes) {
+        this.scopes = scopes;
+    }
+
+    @Override
+    public boolean isScoped() {
+        return !StringUtils.isEmpty(scopes);
+    }
+
+    @Override
+    public Set<String> getScope() {
+        Set<String> scope = new HashSet<>();
+
+        if (isScoped()) {
+            scope = new HashSet<>(Arrays.asList(scopes.split("\\s")));
+        }
+
+        return scope;
+    }
+
+    public String getGrantTypes() {
+        return grantTypes;
+    }
+
+    public void setGrantTypes(String grantTypes) {
+        this.grantTypes = grantTypes;
+    }
+
+    @Override
+    public Set<String> getAuthorizedGrantTypes() {
+        if (null != grantTypes) {
+            return new HashSet<>(Arrays.asList(grantTypes.split("\\s")));
+        }
+        return null;
+    }
+
+    @Override
+    public Set<GrantedAuthority> getAuthorities() {
+        return authorities;
+    }
+
+    public void setAuthorities(Set<GrantedAuthority> authorities) {
+        this.authorities = authorities;
+    }
+
+    public String getRedirectUris() {
+        return redirectUris;
+    }
+
+    public void setRedirectUris(String redirectUris) {
+        this.redirectUris = redirectUris;
+    }
+
+    @Override
+    public Set<String> getRegisteredRedirectUri() {
+        if (null != redirectUris) {
+            return new HashSet<>(Arrays.asList(redirectUris.split("\\s")));
+        }
+        return null;
+    }
+
+    @Override
+    public Integer getAccessTokenValiditySeconds() {
+        return accessTokenValiditySeconds;
+    }
+
+    public void setAccessTokenValiditySeconds(Integer accessTokenValiditySeconds) {
+        this.accessTokenValiditySeconds = accessTokenValiditySeconds;
+    }
+
+    @Override
+    public Integer getRefreshTokenValiditySeconds() {
+        return refreshTokenValiditySeconds;
+    }
+
+    public void setRefreshTokenValiditySeconds(Integer refreshTokenValiditySeconds) {
+        this.refreshTokenValiditySeconds = refreshTokenValiditySeconds;
+    }
+
+    public boolean isApproved() {
+        return approved;
+    }
+
+    public void setApproved(boolean approved) {
+        this.approved = approved;
+    }
+
+    @Override
+    public boolean isAutoApprove(String s) {
+        return approved;
+    }
+
+    @Override
+    public Map<String, Object> getAdditionalInformation() {
+        return new HashMap<>();
+    }
 }

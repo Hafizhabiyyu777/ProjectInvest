@@ -40,3 +40,4 @@ public class CorsOriginConfiguration implements Filter {
         }
     }
 }
+

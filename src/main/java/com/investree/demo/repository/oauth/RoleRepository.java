@@ -4,11 +4,9 @@ import com.investree.demo.model.oauth.Role;
 import org.springframework.data.repository.PagingAndSortingRepository;
 
 import java.util.List;
-import java.util.UUID;
 
-public interface RoleRepository extends PagingAndSortingRepository<Role, UUID> {
+public interface RoleRepository extends PagingAndSortingRepository<Role, Long> {
     Role findOneByName(String name);
 
     List<Role> findByNameIn(String[] names);
-
 }

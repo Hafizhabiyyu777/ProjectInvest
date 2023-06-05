@@ -1,21 +1,25 @@
 package com.investree.demo.model.oauth;
 
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
+import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.*;
+import java.util.ArrayList;
+import java.util.Collection;
+import java.util.Date;
+import java.util.List;
 
-@Data
 @Entity
 @Table(name = "oauth_user")
 public class User implements UserDetails, Serializable {
+
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
+    private Long id;
 
     @Column(length = 100,unique=true)
     private String username;
@@ -68,6 +72,22 @@ public class User implements UserDetails, Serializable {
     )
     private List<Role> roles = new ArrayList<>();
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public List<Role> getRoles() {
+        return roles;
+    }
+
+    public void setRoles(List<Role> roles) {
+        this.roles = roles;
+    }
+
     @Override
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.roles;
@@ -77,6 +97,15 @@ public class User implements UserDetails, Serializable {
     public String getPassword() {
         return password;
     }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
     @Override
     public String getUsername() {
         return username;
@@ -134,6 +163,36 @@ public class User implements UserDetails, Serializable {
         this.fullname = fullname;
     }
 
+    public String getVerifyToken() {
+        return verifyToken;
+    }
 
+    public void setVerifyToken(String verifyToken) {
+        this.verifyToken = verifyToken;
+    }
 
+    public Date getExpiredVerifyToken() {
+        return expiredVerifyToken;
+    }
+
+    public void setExpiredVerifyToken(Date expiredVerifyToken) {
+        this.expiredVerifyToken = expiredVerifyToken;
+    }
+
+    public String getOtp() {
+        return otp;
+    }
+
+    public void setOtp(String otp) {
+        this.otp = otp;
+    }
+
+    public Date getOtpExpiredDate() {
+        return otpExpiredDate;
+    }
+
+    public void setOtpExpiredDate(Date otpExpiredDate) {
+        this.otpExpiredDate = otpExpiredDate;
+    }
 }
+

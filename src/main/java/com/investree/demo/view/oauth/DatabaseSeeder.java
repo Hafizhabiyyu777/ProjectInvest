@@ -1,5 +1,6 @@
 package com.investree.demo.view.oauth;
 
+
 import com.investree.demo.model.oauth.Client;
 import com.investree.demo.model.oauth.Role;
 import com.investree.demo.model.oauth.RolePath;
@@ -17,12 +18,9 @@ import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Service;
 
-import javax.persistence.Column;
 import javax.transaction.Transactional;
-import javax.xml.crypto.Data;
 import java.util.ArrayList;
 import java.util.List;
-
 
 @Component
 @Service
@@ -50,7 +48,7 @@ public class DatabaseSeeder implements ApplicationRunner {
     private String defaultPassword = "password";
 
     private String[] users = new String[]{
-            "admin@mail.com:ROLE_SUPERUSER ROLE_USER ROLE_ADMIN",
+            "hafizh@gmail.com:ROLE_SUPERUSER ROLE_USER ROLE_ADMIN",
             "user@mail.com:ROLE_USER"
     };
 
@@ -67,17 +65,18 @@ public class DatabaseSeeder implements ApplicationRunner {
             "ROLE_WRITE:oauth_role:^/.*:GET|PUT|POST|PATCH|DELETE|OPTIONS"
     };
 
+
     @Override
     @Transactional
-    public void run(ApplicationArguments args) throws Exception {
+    public void run(ApplicationArguments applicationArguments) {
         String password = encoder.encode(defaultPassword);
 
         this.insertRoles();
         this.insertClients(password);
         this.insertUser(password);
-
     }
 
+    @Transactional
     public void insertRoles() {
         for (String role: roles) {
             String[] str = role.split(":");
@@ -156,6 +155,5 @@ public class DatabaseSeeder implements ApplicationRunner {
             userRepository.save(oldUser);
         }
     }
-
-
 }
+

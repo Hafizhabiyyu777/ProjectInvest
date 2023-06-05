@@ -1,17 +1,16 @@
 package com.investree.demo.model.oauth;
 
+
 import com.fasterxml.jackson.annotation.JsonIgnore;
-import lombok.Data;
-import org.apache.catalina.User;
+import com.sun.istack.NotNull;
 import org.springframework.security.core.GrantedAuthority;
 
 import javax.persistence.*;
 import java.util.List;
-import java.util.UUID;
 
-@Data
-@Entity
-@Table( name = "oauth_role",
+@Entity()
+@Table(
+        name = "oauth_role",
         uniqueConstraints = {
                 @UniqueConstraint(
                         name = "role_name_and_type",
@@ -21,8 +20,10 @@ import java.util.UUID;
 )
 public class Role implements GrantedAuthority {
     @Id
-    @GeneratedValue
-    private UUID id;
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @NotNull
+    private Long id;
+
     @Column(length = 20)
     private String name;
 
@@ -32,13 +33,53 @@ public class Role implements GrantedAuthority {
     private List<RolePath> rolePaths;
 
     @JsonIgnore
-    @ManyToMany(targetEntity = User.class, mappedBy = "roles", fetch = FetchType.LAZY)
+    @ManyToMany(targetEntity = User.class, mappedBy = "roles",fetch = FetchType.LAZY)
     private List<User> users;
 
+    public Long getId() {
+        return id;
+    }
+
+    public void setId(Long id) {
+        this.id = id;
+    }
+
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    public String getType() {
+        return type;
+    }
+
+    public void setType(String type) {
+        this.type = type;
+    }
+
     @Override
+    @JsonIgnore
     public String getAuthority() {
         return this.name;
     }
 
+    public List<RolePath> getRolePaths() {
+        return rolePaths;
+    }
 
+    public void setRolePaths(List<RolePath> rolePaths) {
+        this.rolePaths = rolePaths;
+    }
+
+    public List<User> getUsers() {
+        return users;
+    }
+
+    public void setUsers(List<User> users) {
+        this.users = users;
+    }
 }
+

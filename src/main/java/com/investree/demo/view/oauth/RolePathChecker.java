@@ -16,6 +16,7 @@ import java.util.List;
 @Service
 @EnableCaching
 public class RolePathChecker {
+
     @Autowired
     private RolePathRepository rolePathRepository;
 
@@ -51,3 +52,4 @@ public class RolePathChecker {
     }
 
 }
+
